@@ -8,8 +8,8 @@ import (
 func TestEmptyMap(t *testing.T) {
 	result := SplitMapIntoNumberOfChunks[string](3, map[string]string{})
 
-	if len(result) != 3 {
-		t.Errorf("Expected 3 chunks, got %d", len(result))
+	if len(result) != 1 {
+		t.Errorf("Expected 1 chunks, got %d", len(result))
 	}
 
 	for _, chunk := range result {
@@ -46,8 +46,8 @@ func TestMultipleChunksUnevenDistribution(t *testing.T) {
 func TestNumberOfChunksGreaterThanMapSize(t *testing.T) {
 	inputMap := map[string]string{"a": "apple", "b": "banana"}
 	result := SplitMapIntoNumberOfChunks[string](5, inputMap)
-	if len(result) != 5 {
-		t.Errorf("Expected 5 chunks, got %d", len(result))
+	if len(result) != len(inputMap) {
+		t.Errorf("Expected %d chunks, got %d", len(inputMap), len(result))
 	}
 	nonEmptyCount := 0
 	for _, chunk := range result {
@@ -62,22 +62,23 @@ func TestNumberOfChunksGreaterThanMapSize(t *testing.T) {
 
 func TestNumberOfChunksOutput(t *testing.T) {
 	tests := []struct {
-		name           string
-		numberOfChunks int
-		originalMap    map[string]string
+		name                    string
+		numberOfChunksRequested int
+		numberOfChunksExpected  int
+		originalMap             map[string]string
 	}{
-		{"EmptyMap", 3, map[string]string{}},
-		{"SingleChunk", 1, map[string]string{"a": "apple"}},
-		{"EvenDistribution", 2, map[string]string{"a": "apple", "b": "banana"}},
-		{"UnevenDistribution", 2, map[string]string{"a": "apple", "b": "banana", "c": "cherry"}},
-		{"ChunksGreaterThanSize", 5, map[string]string{"a": "apple", "b": "banana"}},
+		{"EmptyMap", 3, 1, map[string]string{}},
+		{"SingleChunk", 1, 1, map[string]string{"a": "apple"}},
+		{"EvenDistribution", 2, 2, map[string]string{"a": "apple", "b": "banana"}},
+		{"UnevenDistribution", 2, 2, map[string]string{"a": "apple", "b": "banana", "c": "cherry"}},
+		{"ChunksGreaterThanSize", 5, 2, map[string]string{"a": "apple", "b": "banana"}},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result := SplitMapIntoNumberOfChunks[string](tt.numberOfChunks, tt.originalMap)
-			if len(result) != tt.numberOfChunks {
-				t.Errorf("For test '%s', expected %d chunks, got %d", tt.name, tt.numberOfChunks, len(result))
+			result := SplitMapIntoNumberOfChunks[string](tt.numberOfChunksRequested, tt.originalMap)
+			if len(result) != tt.numberOfChunksExpected {
+				t.Errorf("For test '%s', requested %d chunks, expected %d chunks, got %d", tt.name, tt.numberOfChunksRequested, tt.numberOfChunksExpected, len(result))
 			}
 		})
 	}
