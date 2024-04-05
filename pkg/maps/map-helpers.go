@@ -12,6 +12,10 @@ func SplitMapIntoNumberOfChunks[K comparable, V any](numberOfChunks int, origina
 	if chunkSize == 0 {
 		chunkSize = 1
 		numberOfChunks = len(originalMap)
+	} else {
+		if totalSize%numberOfChunks != 0 {
+			chunkSize++
+		}
 	}
 
 	chunks := make([]map[K]V, 0, numberOfChunks)
