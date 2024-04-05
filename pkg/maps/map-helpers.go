@@ -3,37 +3,30 @@ package maps
 func SplitMapIntoNumberOfChunks[K comparable, V any](numberOfChunks int, originalMap map[K]V) []map[K]V {
 	totalSize := len(originalMap)
 
-	if totalSize == 0 {
+	if totalSize == 0 || numberOfChunks <= 0 {
 		return []map[K]V{originalMap}
 	}
 
-	chunkSize := totalSize / numberOfChunks
-
-	if chunkSize == 0 {
-		chunkSize = 1
-		numberOfChunks = len(originalMap)
-	} else {
-		if totalSize%numberOfChunks != 0 {
-			chunkSize++
-		}
+	if numberOfChunks > totalSize {
+		numberOfChunks = totalSize
 	}
 
-	chunks := make([]map[K]V, 0, numberOfChunks)
+	baseChunkSize := totalSize / numberOfChunks
+	extraElements := totalSize % numberOfChunks
 
-	for i := 0; i < numberOfChunks; i++ {
-		chunks = append(chunks, make(map[K]V))
+	chunks := make([]map[K]V, numberOfChunks)
+	for i := range chunks {
+		chunks[i] = make(map[K]V)
 	}
 
 	i := 0
-
 	for key, value := range originalMap {
-		index := i / chunkSize
-
-		if index >= numberOfChunks {
-			index = numberOfChunks - 1
+		chunkIndex := i / (baseChunkSize + 1)
+		if chunkIndex >= extraElements {
+			chunkIndex = extraElements + (i-extraElements*(baseChunkSize+1))/baseChunkSize
 		}
 
-		chunks[index][key] = value
+		chunks[chunkIndex][key] = value
 		i++
 	}
 
