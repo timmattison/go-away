@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func LoadEnv() error {
+func LoadEnvFromRepo() error {
 	var envPath string
 	var err error
 
