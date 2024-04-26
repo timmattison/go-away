@@ -99,3 +99,7 @@ func FileExists(path string) bool {
 
 	return err == nil
 }
+
+func FilenameWithoutExt(fileName string) string {
+	return fileName[:len(fileName)-len(filepath.Ext(fileName))]
+}
