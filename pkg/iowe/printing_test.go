@@ -1,7 +1,7 @@
-package io
+package iowe
 
 import (
-	"github.com/timmattison/go-away/pkg/environment"
+	"github.com/timmattison/go-away/pkg/save-the-planet"
 	"os"
 	"testing"
 
@@ -25,8 +25,8 @@ func TestGetPrinter(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			os.Setenv(environment.LangEnvironmentVariableName, tt.lang)
-			defer os.Unsetenv(environment.LangEnvironmentVariableName)
+			os.Setenv(save_the_planet.LangEnvironmentVariableName, tt.lang)
+			defer os.Unsetenv(save_the_planet.LangEnvironmentVariableName)
 
 			_, tag := GetPrinter()
 			base, _, _ := tag.Raw()

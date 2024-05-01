@@ -1,4 +1,4 @@
-package environment
+package save_the_planet
 
 import (
 	"github.com/joho/godotenv"

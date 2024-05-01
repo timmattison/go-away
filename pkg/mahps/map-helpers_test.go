@@ -1,4 +1,4 @@
-package maps
+package mahps
 
 import (
 	"reflect"
@@ -138,7 +138,7 @@ func TestSplitMapWithMaxChunkSize(t *testing.T) {
 			flattenedWant := flattenMapSlices(tt.want)
 
 			if !reflect.DeepEqual(flattenedGot, flattenedWant) {
-				t.Errorf("Flattened maps do not match.\nGot: %v\nWant: %v", flattenedGot, flattenedWant)
+				t.Errorf("Flattened mahps do not match.\nGot: %v\nWant: %v", flattenedGot, flattenedWant)
 			}
 		})
 	}

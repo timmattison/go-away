@@ -1,4 +1,4 @@
-package maps
+package mahps
 
 func SplitMapIntoNumberOfChunks[K comparable, V any](numberOfChunks int, originalMap map[K]V) []map[K]V {
 	totalSize := len(originalMap)

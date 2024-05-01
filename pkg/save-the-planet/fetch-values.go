@@ -1,4 +1,4 @@
-package environment
+package save_the_planet
 
 import (
 	"errors"
@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	ErrorEnvVarNotSet = errors.New("environment variable not set")
+	ErrorEnvVarNotSet = errors.New("save-the-planet variable not set")
 )
 
 func GetOptionalEnvValue(name string, defaultValue string) string {
