@@ -66,6 +66,10 @@ func GetRepoBase() (string, error) {
 	return "", os.ErrNotExist
 }
 
+// GetRepoRelativePath returns an absolute path for a file relative to the directory that contains the .git directory.
+// If the git repo is in `/home/user/repo/.git` and you pass in "main.go" it will return `/home/user/repo/main.go`. This
+// is determined by finding the .git directory, going up one level, joining the relative path to that directory, and
+// then returning the absolute path.
 func GetRepoRelativePath(relativePath string) (string, error) {
 	var repoBase string
 	var err error
