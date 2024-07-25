@@ -11,6 +11,7 @@ import (
 	"strings"
 )
 
+// GetRepoBase Returns the location of the .git directory for the current repo by searching up the directory tree until it finds it, gets an error, or reaches the maximum number of iterations
 func GetRepoBase() (string, error) {
 	// Get the current working directory the user is in
 	var cwd string
